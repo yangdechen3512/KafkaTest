@@ -1,5 +1,6 @@
 package com.quantongfu.kafkastream;
 
+import com.quantongfu.timesextractor.WordTimestampExtractor;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.common.serialization.Serdes;
 import org.apache.kafka.streams.KafkaStreams;
@@ -35,6 +36,8 @@ public class KafkaStreamTest implements Runnable
 		config.put(StreamsConfig.VALUE_SERDE_CLASS_CONFIG,
 				Serdes.String().getClass());
 		config.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest");
+		config.put(StreamsConfig.TIMESTAMP_EXTRACTOR_CLASS_CONFIG,
+				WordTimestampExtractor.class);
 	}
 
 	@Override public void run()
@@ -50,5 +53,8 @@ public class KafkaStreamTest implements Runnable
 		System.out.println("-----------2-----------");
 		KafkaStreams ks = new KafkaStreams(kStreamBuilder, config);
 		ks.start();
+	}
+	public static void main(String[] args){
+		new Thread(new KafkaStreamTest()).start();
 	}
 }

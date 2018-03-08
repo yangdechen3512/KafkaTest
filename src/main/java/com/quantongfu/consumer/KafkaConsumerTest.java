@@ -35,9 +35,9 @@ public class KafkaConsumerTest
 		props.put("key.deserializer",
 				"org.apache.kafka.common.serialization.StringDeserializer");
 		props.put("value.deserializer",
-				"org.apache.kafka.common.serialization.StringDeserializer");
+				"org.apache.kafka.common.serialization.LongDeserializer");
 
-		KafkaConsumer<String, String> consumer = new KafkaConsumer<>(props);
+		KafkaConsumer<String, Long> consumer = new KafkaConsumer<>(props);
 
 		consumer.subscribe(Collections.singletonList("test"));
 
@@ -46,8 +46,8 @@ public class KafkaConsumerTest
 
 		while (true)
 		{
-			ConsumerRecords<String, String> records = consumer.poll(100);
-			for (ConsumerRecord<String, String> record : records){
+			ConsumerRecords<String, Long> records = consumer.poll(100);
+			for (ConsumerRecord<String, Long> record : records){
 				System.out.println(record.key() + "---" + record.value());
 			}
 		}
