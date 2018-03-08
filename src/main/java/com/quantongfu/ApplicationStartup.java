@@ -1,6 +1,6 @@
 package com.quantongfu;
 
-import com.quantongfu.consumer.KafkaConsumerTestTemp;
+import com.quantongfu.kafkastream.KafkaStreamTest;
 
 /**
  * @Author：telin
@@ -11,8 +11,9 @@ public class ApplicationStartup
 {
 	public static void main(String[] args) throws InterruptedException
 	{
-		KafkaConsumerTestTemp.kakfkaConsumer(
-				"10.0.4.23:9092,10.0.4.23:9093",
-				"greencity_ap_source");
+		new Thread(new KafkaStreamTest()).start();
+//		KafkaConsumerTestTemp.kakfkaConsumer(
+//				"10.0.4.23:9092,10.0.4.23:9093",
+//				"greencity_ap_source");
 	}
 }

@@ -4,7 +4,10 @@ import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.clients.producer.ProducerRecord;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
+import java.util.Random;
 
 /**
  * @Author：telin
@@ -13,7 +16,7 @@ import java.util.Properties;
  */
 public class KafkaProducerTest
 {
-	public  final  static String topic = "test";
+	public final static String topic = "test2";
 
 	public static void main(String[] args)
 	{
@@ -32,16 +35,32 @@ public class KafkaProducerTest
 				"org.apache.kafka.common.serialization.StringSerializer");
 		System.out.println("开始生产消息...");
 
-		KafkaProducer<String, String> producer = new KafkaProducer<String, String>(pro);
+		KafkaProducer<String, String> producer = new KafkaProducer<String, String>(
+				pro);
+		Random rand = new Random();
+		List<String> strs = new ArrayList<>();
+		strs.add("a d fe f w");
+		strs.add("b u b b a f e");
+		strs.add("a b c d v d e");
 		int n = 0;
-		while(true){
-			for(int i = 1 + n * 10;i<=10 + n * 10;i++) {
-				producer.send(new ProducerRecord<String, String>(topic, "key-"+i,"message-"+i));
+		while (true)
+		{
+			for (int i = 1 + n * 10; i <= 10 + n * 10; i++)
+			{
+//				producer.send(
+//						new ProducerRecord<String, String>(topic, "key-" + i,
+//								"message-" + i));
+				producer.send(
+						new ProducerRecord<String, String>(topic, "key-" + i,
+								strs.get(rand.nextInt(2))));
 			}
 			n = n + 1;
-			try{
-				Thread.sleep(3000);
-			}catch (Exception e){
+			try
+			{
+				Thread.sleep(5000);
+			}
+			catch (Exception e)
+			{
 				e.printStackTrace();
 			}
 		}
